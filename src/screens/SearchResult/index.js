@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, FlatList} from 'react-native';
-import Posts from '../../components/Post.js';
-import feed from '../../assets/data/feed.json';
-import Post from '../../components/Post.js';
+import feed from '../../assets/data/feed.js';
+import Post from '../../components/Post/index.js';
 
 export default function SearchResultPage() {
   return (
