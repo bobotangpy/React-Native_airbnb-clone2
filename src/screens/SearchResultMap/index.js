@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {View} from 'react-native';
 import MapView from 'react-native-maps';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
@@ -8,12 +8,42 @@ import PostCarouselItem from '../../components/PostCarouselItem';
 import places from '../../assets/data/feed.js';
 
 export default function SearchResultMap() {
+  const [selectedPlaceId, setSelectedPlaceId] = useState(null);
   const width = useWindowDimensions().width;
-  const [selectedPlaceId, setSelectedPlaceId] = useState();
+  const flatList = useRef();
+  const map = useRef();
+  const viewConfig = useRef({itemVisiblePercentThreshold: 70});
+  // ↓↓↓ scroll the list => change the highlighted price tag on map
+  const onViewChanged = useRef(({viewableItems}) => {
+    if (viewableItems.length > 0) {
+      let selectedPlace = viewableItems[0].item;
+      setSelectedPlaceId(selectedPlace.id);
+    }
+  });
+
+  useEffect(() => {
+    if (flatList && selectedPlaceId) {
+      let index = places.findIndex(item => item.id === selectedPlaceId);
+
+      flatList.current.scrollToIndex({index});
+
+      // ↓↓↓ scroll the list => move to the highlighted price tag on map
+      let selectedPlace = places[index];
+      // Get the region to zoom in
+      let region = {
+        latitude: selectedPlace.coordinate.latitude,
+        longitude: selectedPlace.coordinate.longitude,
+        longitudeDelta: 0.1,
+        latitudeDelta: 0.1,
+      };
+      map.current.animateToRegion(region);
+    }
+  }, [selectedPlaceId]);
 
   return (
     <View style={{width: '100%', height: '100%'}}>
       <MapView
+        ref={map}
         style={{width: '100%', height: '100%'}}
         initialRegion={{
           latitude: 40.74061,
@@ -34,6 +64,7 @@ export default function SearchResultMap() {
 
       <View style={{position: 'absolute', bottom: 30}}>
         <FlatList
+          ref={flatList}
           data={places}
           renderItem={({item}) => <PostCarouselItem post={item} />}
           horizontal
@@ -41,6 +72,8 @@ export default function SearchResultMap() {
           snapToInterval={width - 60}
           snapToAlignment="center"
           decelerationRate="fast"
+          viewabilityConfig={viewConfig.current}
+          onViewableItemsChanged={onViewChanged.current}
         />
       </View>
     </View>

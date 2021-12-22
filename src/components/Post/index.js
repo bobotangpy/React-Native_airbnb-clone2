@@ -1,14 +1,21 @@
+import {useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import styles from './styles';
 
 // PYRYEQ4YRFRV
 
 export default function Post({post}) {
+  const navigation = useNavigation();
+
+  const goToDetaliedPost = () => {
+    navigation.navigate('Post', {postId: post.id});
+  };
+
   return (
     // <ScrollView>
     //   {posts?.map((post, i) => (
-    <View style={styles.container}>
+    <Pressable onPress={goToDetaliedPost} style={styles.container}>
       <Image
         style={styles.image}
         source={{
@@ -28,7 +35,7 @@ export default function Post({post}) {
       </Text>
 
       <Text style={styles.totalPrice}>${post.totalPrice} total</Text>
-    </View>
+    </Pressable>
     //   ))}
     // </ScrollView>
   );
