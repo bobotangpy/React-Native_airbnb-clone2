@@ -67,7 +67,10 @@ export default function GuestScreen() {
         onPress={() =>
           navigation.navigate('Home', {
             screen: 'Explore',
-            params: {screen: 'SearchResult'},
+            params: {
+              screen: 'SearchResult',
+              params: {guests: adults + children},
+            },
           })
         }>
         <Text style={styles.searchTxt}>Search</Text>

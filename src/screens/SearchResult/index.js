@@ -5,10 +5,11 @@ import Post from '../../components/Post/index.js';
 // import feed from '../../assets/data/feed.js';
 import {supabase} from '../../../supabase';
 
-export default function SearchResultPage() {
+export default function SearchResultPage({guests}) {
   const [posts, setPosts] = useState();
 
   useEffect(() => {
+    console.log('guests:::', guests);
     fetchPosts();
   }, []);
 
@@ -20,7 +21,17 @@ export default function SearchResultPage() {
         .order('id', {ascending: true});
       // console.log(data);
 
-      if (data) await setPosts(data);
+      // guests > 3 -> show bed >= 2
+      if (data) {
+        if (guests > 3) {
+          // let filteredData = [];
+          let filteredData = data.filter(post => post.bed >= 2);
+          await setPosts(filteredData);
+        } else {
+          let filteredData = data.filter(post => post.bed < 2);
+          await setPosts(filteredData);
+        }
+      }
     } catch (e) {
       console.log(e);
     }
