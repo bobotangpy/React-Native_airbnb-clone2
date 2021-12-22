@@ -28,7 +28,7 @@ const Router = () => {
         <Stack.Screen
           name="Post"
           component={PostScreen}
-          options={{title: 'Accommodations'}}
+          options={{title: 'Accommodation'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

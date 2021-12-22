@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {View, Text, Image, ScrollView, Pressable} from 'react-native';
+import {Text, Image, Pressable} from 'react-native';
 import styles from './styles';
 
 // PYRYEQ4YRFRV
@@ -9,6 +9,7 @@ export default function Post({post}) {
   const navigation = useNavigation();
 
   const goToDetaliedPost = () => {
+    // console.log(post.id);
     navigation.navigate('Post', {postId: post.id});
   };
 
@@ -26,7 +27,7 @@ export default function Post({post}) {
         {post.bed} bed · {post.bedroom} bedroom
       </Text>
       <Text style={styles.desc} numberOfLines={2}>
-        {post.description}
+        {post.title}
       </Text>
 
       <Text style={styles.prices}>

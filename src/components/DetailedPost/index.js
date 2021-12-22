@@ -2,8 +2,6 @@ import React from 'react';
 import {View, Text, Image, ScrollView} from 'react-native';
 import styles from './styles';
 
-// PYRYEQ4YRFRV
-
 export default function DetailedPost({post}) {
   return (
     <ScrollView>

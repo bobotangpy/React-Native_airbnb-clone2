@@ -53,24 +53,6 @@ export default [
   },
   {
     id: '3',
-    image:
-      'https://a0.muscache.com/pictures/c444be23-6b18-4094-b2c7-cee811c08c9c.jpg',
-    type: 'Entire Flat',
-    title: '2 bedroom Upper East Side',
-    description:
-      'This apartment is  perfect for families. A Queen bed in the master bedroom and a full sized bed plus a full sized bunk bed in the second room.  The living room has a new couch that can be two Twin Beds or one slide into a Queen (no pullout frame!).  There is air conditioning in each room, TV in the living room and the master bedroom, and a full kitchen. Updated pictures are coming.   The space  Enjoy an excellent and much more reasonably priced and comfortable alternative to a New York City hotel. Our newly renovated 2 bedroom is located on the charming, tree lined, park block of 77th Street between York Avenue and John Jay Park -  right in the middle of the very safe, Upper East Side. The apartment is a 5th floor walk-up in a beautiful Historic Old World style building with a central courtyard.  This apartment can sleep 6 people .',
-    bed: 4,
-    bedroom: 2,
-    oldPrice: 120,
-    newPrice: 100,
-    totalPrice: 600,
-    coordinate: {
-      latitude: 40.77119,
-      longitude: -73.95241,
-    },
-  },
-  {
-    id: '3',
     image: 'https://a0.muscache.com/pictures/7768624/01114010_original.jpg',
     type: 'Private Room',
     title: 'Double Room w Private Deck Clinton Hill Best Area',
@@ -124,7 +106,8 @@ export default [
   },
   {
     id: '6',
-    image: 'https://a0.muscache.com/pictures/6f42d45e-2450-4251-8770-633a1166bc7f.jpg',
+    image:
+      'https://a0.muscache.com/pictures/6f42d45e-2450-4251-8770-633a1166bc7f.jpg',
     type: 'Entire Flat',
     title: 'Charming East Village One Bedroom Flat',
     description:

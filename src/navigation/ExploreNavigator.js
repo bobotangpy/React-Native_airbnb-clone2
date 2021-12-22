@@ -18,8 +18,8 @@ export default function Router() {
       <Stack.Screen
         name="SearchResult"
         component={SearchResultTabNavigator}
-        options={{headerShown: false}}
-        // options={{title: 'Search Your Destination'}}
+        // options={{headerShown: false}}
+        options={{title: 'Listings'}}
       />
     </Stack.Navigator>
   );
