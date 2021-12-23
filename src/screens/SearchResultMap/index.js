@@ -8,7 +8,7 @@ import PostCarouselItem from '../../components/PostCarouselItem';
 // import places from '../../assets/data/feed.js';
 import {supabase} from '../../../supabase';
 
-export default function SearchResultMap() {
+export default function SearchResultMap({guests, viewport}) {
   const [posts, setPosts] = useState();
   const [selectedPlaceId, setSelectedPlaceId] = useState(null);
   const width = useWindowDimensions().width;
@@ -46,15 +46,45 @@ export default function SearchResultMap() {
     }
   }, [selectedPlaceId, posts]);
 
+  const filterLocations = data => {
+    let loc = data.filter(
+      place =>
+        place.latitude < viewport.northeast.lat &&
+        place.latitude > viewport.southwest.lat &&
+        place.longitude < viewport.northeast.lng &&
+        place.longitude > viewport.southwest.lng,
+    );
+    // console.log('LOCATIONS:::', loc);
+    return loc;
+  };
+
   const fetchPosts = async () => {
     try {
       const {data} = await supabase
         .from('posts')
         .select()
         .order('id', {ascending: true});
-      console.log(data[0]);
+      // console.log(data[0]);
 
-      if (data) await setPosts(data);
+      // guests > 3 -> show bed >= 2
+      if (data && guests) {
+        if (guests > 3) {
+          // let filteredData = [];
+          let filteredData = data.filter(post => post.bed >= 2);
+
+          // filter results based on viewport(lat & lng)
+          let filteredLoc = filterLocations(filteredData);
+
+          await setPosts(filteredLoc);
+        } else {
+          let filteredData = data.filter(post => post.bed < 2);
+
+          // filter results based on viewport(lat & lng)
+          let filteredLoc = filterLocations(filteredData);
+
+          await setPosts(filteredLoc);
+        }
+      } else if (data) await setPosts(data);
     } catch (e) {
       console.log(e);
     }

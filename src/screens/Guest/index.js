@@ -2,13 +2,27 @@
 import React, {useState} from 'react';
 import {View, Text, Pressable} from 'react-native';
 import styles from './styles';
-import {useNavigation} from '@react-navigation/core';
+import {useNavigation, useRoute} from '@react-navigation/core';
 
 export default function GuestScreen() {
   const navigation = useNavigation();
+  const route = useRoute();
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
+  const [showWarning, setShowWarning] = useState(false);
+
+  const changeScreen = () => {
+    if (adults > 0) {
+      navigation.navigate('Home', {
+        screen: 'Explore',
+        params: {
+          screen: 'SearchResult',
+          params: {guests: adults + children, viewport: route.params.viewport},
+        },
+      });
+    } else setShowWarning(true);
+  };
 
   const Category = props => (
     <View style={styles.row}>
@@ -60,19 +74,15 @@ export default function GuestScreen() {
           person={infants}
           handleCount={setInfants}
         />
+
+        {showWarning && (
+          <Text style={styles.warning}>
+            Minimum number of adult guest is 1.
+          </Text>
+        )}
       </View>
 
-      <Pressable
-        style={styles.searchBtn}
-        onPress={() =>
-          navigation.navigate('Home', {
-            screen: 'Explore',
-            params: {
-              screen: 'SearchResult',
-              params: {guests: adults + children},
-            },
-          })
-        }>
+      <Pressable style={styles.searchBtn} onPress={changeScreen}>
         <Text style={styles.searchTxt}>Search</Text>
       </Pressable>
     </View>

@@ -5,13 +5,25 @@ import Post from '../../components/Post/index.js';
 // import feed from '../../assets/data/feed.js';
 import {supabase} from '../../../supabase';
 
-export default function SearchResultPage({guests}) {
+export default function SearchResultPage({guests, viewport}) {
   const [posts, setPosts] = useState();
 
   useEffect(() => {
-    console.log('guests:::', guests);
+    // console.log('viewport:::', viewport);
     fetchPosts();
   }, []);
+
+  const filterLocations = data => {
+    let loc = data.filter(
+      place =>
+        place.latitude < viewport.northeast.lat &&
+        place.latitude > viewport.southwest.lat &&
+        place.longitude < viewport.northeast.lng &&
+        place.longitude > viewport.southwest.lng,
+    );
+    // console.log('LOCATIONS:::', loc);
+    return loc;
+  };
 
   const fetchPosts = async () => {
     try {
@@ -22,15 +34,24 @@ export default function SearchResultPage({guests}) {
       // console.log(data);
 
       // guests > 3 -> show bed >= 2
-      if (data) {
+      if (data && guests) {
         if (guests > 3) {
-          // let filteredData = [];
           let filteredData = data.filter(post => post.bed >= 2);
-          await setPosts(filteredData);
+
+          // filter results based on viewport(lat & lng)
+          let filteredLoc = filterLocations(filteredData);
+
+          await setPosts(filteredLoc);
         } else {
           let filteredData = data.filter(post => post.bed < 2);
-          await setPosts(filteredData);
+
+          // filter results based on viewport(lat & lng)
+          let filteredLoc = filterLocations(filteredData);
+
+          await setPosts(filteredLoc);
         }
+      } else if (data) {
+        await setPosts(data);
       }
     } catch (e) {
       console.log(e);

@@ -21,7 +21,9 @@ export default function HomeScreen() {
         source={require('../../assets/images/home.jpg')}
         style={styles.image}>
         <Text style={styles.title}>Go Near</Text>
-        <Pressable style={styles.button} onPress={() => console.log('clicked')}>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate('SearchResult', {guests: null})}>
           <Text style={styles.btnText}>Explore nearby places.</Text>
         </Pressable>
       </ImageBackground>

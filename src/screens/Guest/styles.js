@@ -52,6 +52,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  warning: {
+    fontSize: 18,
+    color: '#ff3838',
+    marginVertical: 15,
+    marginHorizontal: 25,
+  },
 });
 
 export default styles;

@@ -9,6 +9,7 @@ const Tab = createMaterialTopTabNavigator();
 export default function SearchResultTabNavigator() {
   const route = useRoute();
   const guests = route.params.guests;
+  const viewport = route.params.viewport;
 
   return (
     <Tab.Navigator
@@ -17,10 +18,10 @@ export default function SearchResultTabNavigator() {
         tabBarIndicatorStyle: {backgroundColor: '#f15454'},
       }}>
       <Tab.Screen name="list">
-        {() => <SearchResultPage guests={guests} />}
+        {() => <SearchResultPage guests={guests} viewport={viewport} />}
       </Tab.Screen>
       <Tab.Screen name="map">
-        {() => <SearchResultMap guests={guests} />}
+        {() => <SearchResultMap guests={guests} viewport={viewport} />}
       </Tab.Screen>
     </Tab.Navigator>
   );
