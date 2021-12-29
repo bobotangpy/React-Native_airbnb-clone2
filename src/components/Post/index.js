@@ -35,7 +35,7 @@ export default function Post({post}) {
         <Text style={styles.newPrice}>${post.newPrice}</Text>/ night
       </Text>
 
-      <Text style={styles.totalPrice}>${post.totalPrice} total</Text>
+      <Text style={styles.totalPrice}>${Number(post.newPrice) * 5} total</Text>
     </Pressable>
     //   ))}
     // </ScrollView>

@@ -58,6 +58,7 @@ export default function HomeTabNavigator() {
           tabBarIcon: color => (
             <EvilIcons name="user" size={25} color={color} />
           ),
+          headerShown: false,
         }}
       />
     </Tab.Navigator>
